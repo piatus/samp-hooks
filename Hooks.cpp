@@ -49,24 +49,22 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 	{
 		if (strpos(reinterpret_cast<char*>(amx->base
 				+ reinterpret_cast<AMX_FUNCSTUBNT*>(hdr->publics
-				+ amx->base)[idx].nameofs), dcallback) > 1)
+				+ amx->base)[idx].nameofs), dcallback) >= 1)
 		{
-		
-			 
-				i = (int)((params[0] / sizeof(cell)));
-				if (i > 2)
-				{
+			i = (int)((params[0] / sizeof(cell)));
+			if (i > 2)
+			{
 					 
-					for (; i >= 2; i -= 2)
+				for (; i >= 2; i -= 2)
+				{
+
+					amx_GetAddr(amx, params[i - 1], &addr[0]);
+					amx_GetAddr(amx, params[i], &addr[1]);
+
+					if (addr[0] && params[i])
 					{
-
-						amx_GetAddr(amx, params[i - 1], &addr[0]);
-						amx_GetAddr(amx, params[i], &addr[1]);
-
-						if (addr[0] && params[i])
+						switch (*addr[0])
 						{
-							switch (*addr[0])
-							{
 							case H_BOOL:
 								amx_Push(amx, static_cast<cell>((*((bool*)*&addr[1]))));
 								break;
@@ -78,24 +76,21 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 								break;
 							case H_STRING:
 
-								char * getstr;
-								amx_StrParam(amx, params[i], getstr);
+							char * getstr;
+							amx_StrParam(amx, params[i], getstr);
 
-								if (getstr == NULL) getstr = " ";
-								amx_PushString(amx, &addr2[numstr], NULL, getstr, NULL, NULL);
+							if (getstr == NULL) getstr = " ";
+							amx_PushString(amx, &addr2[numstr], NULL, getstr, NULL, NULL);
 								
-								numstr++;
-								break;
+							numstr++;
+							break;
 
-							}
-						
-
+						}
 					}
 				}
-				amx_Exec(amx, 0, idx);
-				while (numstr>0) amx_Release(amx, addr2[(numstr--, numstr)]);
-
 			}
+			amx_Exec(amx, 0, idx);
+			while (numstr>0) amx_Release(amx, addr2[(numstr--, numstr)]);
 		}
 	}
 
