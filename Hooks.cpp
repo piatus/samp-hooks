@@ -35,6 +35,7 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 	cell *addr[2] = { NULL };
 	cell addr2[16] = { NULL };
 	char * callback;
+	char dcallback[32] = "H";
 
 	AMX_HEADER *hdr = (AMX_HEADER *)amx->base;
 	 
@@ -42,19 +43,15 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 
 	if (callback == NULL) return 0;
 
-	
+	strcat_s(dcallback, sizeof(dcallback), callback);
+
 	for (int idx = 0, num = (hdr->natives - hdr->publics) / hdr->defsize; idx < num; ++idx)
 	{
 		if (strpos(reinterpret_cast<char*>(amx->base
 				+ reinterpret_cast<AMX_FUNCSTUBNT*>(hdr->publics
-				+ amx->base)[idx].nameofs), callback) > 1 )
+				+ amx->base)[idx].nameofs), dcallback) > 1)
 		{
 		
-			if (!amx_FindPublic(amx, reinterpret_cast<char*>(amx->base
-				+ reinterpret_cast<AMX_FUNCSTUBNT*>(hdr->publics
-				+ amx->base)[idx].nameofs), &idx))
-			{
-
 			 
 				i = (int)((params[0] / sizeof(cell)));
 				if (i > 2)
@@ -83,13 +80,15 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 
 								char * getstr;
 								amx_StrParam(amx, params[i], getstr);
+
+								if (getstr == NULL) getstr = " ";
 								amx_PushString(amx, &addr2[numstr], NULL, getstr, NULL, NULL);
 								
 								numstr++;
 								break;
 
 							}
-						}
+						
 
 					}
 				}
