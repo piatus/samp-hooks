@@ -54,20 +54,28 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 
 	int i = (int)((params[0] / sizeof(cell)));
 	int idx = 0;
+	int len = NULL;
 	cell amx_ret = 1;
 	int numstr = 0;
 	cell  addr2[16] = { NULL };
-	cell *addr[2] = { NULL };
-	char *callback = NULL;
+	cell *addr[2] = { NULL, NULL };
 	char dcallback[32] = "H";
+	char* data = NULL;
 
+	 
 	AMX_HEADER *hdr = (AMX_HEADER *)amx->base;
 
-	amx_StrParam(amx, params[1], callback);
+	amx_GetAddr(amx, params[1], &addr[0]);
+	amx_StrLen(addr[0], &len);
 
-	if (callback == NULL) return 0;
+	if (!len || !addr[0] || ((data) = (char*)alloca((len + 1) * sizeof(*(data)))) == NULL) return -1;
 
-	strcat_s(dcallback, sizeof(dcallback), callback);
+	amx_GetString((char*)(data), addr[0], sizeof(*(data))>1, len + 1);
+	#if defined WIN32 || defined _WIN32 || defined __WIN32__
+		strcat_s(dcallback, sizeof(dcallback), data);
+	#else
+		strcat(dcallback, data);
+	#endif
 
 	for (int idx = 0, num = (hdr->natives - hdr->publics) / hdr->defsize; idx < num; ++idx)
 	{
@@ -100,13 +108,20 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 							break;
 						case H_STRING:
 
-							char * getstr;
-							amx_StrParam(amx, params[i], getstr);
+							int
+								ret = NULL;
+							len = NULL,
+							data = NULL;
 
-							if (getstr == NULL) getstr = '\0';
-							amx_PushString(amx, &addr2[numstr], NULL, getstr, NULL, NULL);
-
+							amx_StrLen(addr[1], &len);
+							if (!len || !addr[1] || ((data) = (char*)alloca((len + 1) * sizeof(*(data)))) == NULL) amx_PushString(amx, &addr2[numstr], NULL, "", NULL, NULL);
+							else
+							{
+								amx_GetString((char*)(data), addr[1], sizeof(*(data))>1, len + 1);
+								amx_PushString(amx, &addr2[numstr], NULL, data, NULL, NULL);
+							}
 							numstr++;
+
 							break;
 
 						}
@@ -117,6 +132,8 @@ cell AMX_NATIVE_CALL hook_CallHook(AMX* amx, cell* params)
 			amx_Exec(amx, &amx_ret, idx);
 
 			while (numstr>0) amx_Release(amx, addr2[(numstr--, numstr)]);
+
+			if (!amx_ret) return 0;
 		}
 	}
 
@@ -128,21 +145,33 @@ cell AMX_NATIVE_CALL hook_CallLocalFunction(AMX* amx, cell* params)
 
 	int i = (int)((params[0] / sizeof(cell)));
 	int idx = 0;
+	int len = NULL;
+	cell amx_ret = 1;
 	int numstr = 0;
 	cell  addr2[16] = { NULL };
-	cell *addr[2] = { NULL };
-	char *callback = NULL;
+	cell *addr[2] = { NULL, NULL };
+	char* data = NULL;
+
+
 	AMX_HEADER *hdr = (AMX_HEADER *)amx->base;
 
-	amx_StrParam(amx, params[1], callback);
+	amx_GetAddr(amx, params[1], &addr[0]);
+	amx_StrLen(addr[0], &len);
+
+	if (!len || !addr[0] || ((data) = (char*)alloca((len + 1) * sizeof(*(data)))) == NULL) return -1;
+
+	amx_GetString((char*)(data), addr[0], sizeof(*(data))>1, len + 1);
 
 	for (int idx = 0, num = (hdr->natives - hdr->publics) / hdr->defsize; idx < num; ++idx)
 	{
-		if (strcmp(((char *)amx->base + reinterpret_cast<AMX_FUNCSTUBNT*>(hdr->publics
-			+ amx->base)[idx].nameofs), callback) != -1)
+		if (strcmp(reinterpret_cast<char*>(amx->base
+			+ reinterpret_cast<AMX_FUNCSTUBNT*>(hdr->publics
+			+ amx->base)[idx].nameofs), data) != -1)
 		{
+			i = (int)((params[0] / sizeof(cell)));
 			if (i > 2)
 			{
+
 				for (; i >= 2; i -= 2)
 				{
 
@@ -164,28 +193,40 @@ cell AMX_NATIVE_CALL hook_CallLocalFunction(AMX* amx, cell* params)
 							break;
 						case H_STRING:
 
-							char * getstr;
-							amx_StrParam(amx, params[i], getstr);
+							int
+								ret = NULL;
+							len = NULL,
+								data = NULL;
 
-							if (getstr == NULL) getstr = '\0';
-							amx_PushString(amx, &addr2[numstr], NULL, getstr, NULL, NULL);
-
+							amx_StrLen(addr[1], &len);
+							if (!len || !addr[1] || ((data) = (char*)alloca((len + 1) * sizeof(*(data)))) == NULL) amx_PushString(amx, &addr2[numstr], NULL, "", NULL, NULL);
+							else
+							{
+								amx_GetString((char*)(data), addr[1], sizeof(*(data))>1, len + 1);
+								amx_PushString(amx, &addr2[numstr], NULL, data, NULL, NULL);
+							}
 							numstr++;
+
 							break;
 
 						}
 					}
 				}
 			}
-			cell amxret;
 
-			amx_Exec(amx, &amxret, idx);
+			amx_Exec(amx, &amx_ret, idx);
+
 			while (numstr>0) amx_Release(amx, addr2[(numstr--, numstr)]);
-			return amxret;
+			return amx_ret;
 		}
 	}
 
 	return -1;
+}
+
+cell AMX_NATIVE_CALL hook_GetVersion(AMX* amx, cell* params)
+{
+	return _VERSION;
 }
  
 
@@ -194,6 +235,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 {
 	{ "HOOKS_CallHook", hook_CallHook },
 	{ "HOOKS_CallLocalFunction", hook_CallLocalFunction },
+	{ "HOOKS_GetVersion", hook_GetVersion },
 	{ 0, 0 }
 };
 

@@ -29,7 +29,8 @@ enum hooks_data
 };
 
 native HOOKS_CallHook(const callback[], {Float, _}:...);
-//native HOOKS_CallLocalFunction(const callback[], {Float, _}:...); // CallLocalFunctionEx("OnPlayerConnect", H_INT, playerid); NOT TO USE! (function for testing)
+native HOOKS_CallLocalFunction(const callback[], {Float, _}:...); // CallLocalFunctionEx("OnPlayerConnect", H_INT, playerid); NOT TO USE! (function for testing)
+native HOOKS_GetVersion(); 
 
 #define HOOK:%0.%1(%2) forward %0H%1(%2); public %0H%1(%2)
 #define @HOOKS_CallHook(%0) HOOKS_CallHook(%0)
@@ -75,7 +76,7 @@ public OnFilterScriptExit() return @HOOKS_CallHook("OnFilterScriptExit");
 #define OnFilterScriptExit @@HOnFilterScriptExit
 forward @@HOnFilterScriptExit();
 
-public OnPlayerConnect(playerid) return @HOOKS_CallHook("OnPlayerConnect" , H_INT, playerid);
+public OnPlayerConnect(playerid) return @HOOKS_CallHook("OnPlayerConnect", H_INT, playerid);
 #if defined _ALS_OnPlayerConnect
 
 #undef OnPlayerConnect
@@ -85,7 +86,7 @@ public OnPlayerConnect(playerid) return @HOOKS_CallHook("OnPlayerConnect" , H_IN
 #define OnPlayerConnect @@HOnPlayerConnect
 forward @@HOnPlayerConnect(playerid);
 
-public OnPlayerDisconnect(playerid, reason) return @HOOKS_CallHook("OnPlayerDisconnect" , H_INT, playerid, H_INT, reason);
+public OnPlayerDisconnect(playerid, reason) return @HOOKS_CallHook("OnPlayerDisconnect", H_INT, playerid, H_INT, reason);
 #if defined _ALS_OnPlayerDisconnect
 
 #undef OnPlayerDisconnect
@@ -95,7 +96,7 @@ public OnPlayerDisconnect(playerid, reason) return @HOOKS_CallHook("OnPlayerDisc
 #define OnPlayerDisconnect @@HOnPlayerDisconnect
 forward @@HOnPlayerDisconnect(playerid, reason);
 
-public OnPlayerSpawn(playerid) return @HOOKS_CallHook("OnPlayerSpawn" , H_INT, playerid);
+public OnPlayerSpawn(playerid) return @HOOKS_CallHook("OnPlayerSpawn", H_INT, playerid);
 #if defined _ALS_OnPlayerSpawn
 
 #undef OnPlayerSpawn
@@ -105,7 +106,7 @@ public OnPlayerSpawn(playerid) return @HOOKS_CallHook("OnPlayerSpawn" , H_INT, p
 #define OnPlayerSpawn @@HOnPlayerSpawn
 forward @@HOnPlayerSpawn(playerid);
 
-public OnPlayerDeath(playerid, killerid, reason) return @HOOKS_CallHook("OnPlayerDeath" , H_INT, playerid, H_INT, killerid, H_INT, reason);
+public OnPlayerDeath(playerid, killerid, reason) return @HOOKS_CallHook("OnPlayerDeath", H_INT, playerid, H_INT, killerid, H_INT, reason);
 #if defined _ALS_OnPlayerDeath
 
 #undef OnPlayerDeath
@@ -115,7 +116,7 @@ public OnPlayerDeath(playerid, killerid, reason) return @HOOKS_CallHook("OnPlaye
 #define OnPlayerDeath @@HOnPlayerDeath
 forward @@HOnPlayerDeath(playerid, killerid, reason);
 
-public OnVehicleSpawn(vehicleid) return @HOOKS_CallHook("OnVehicleSpawn" , H_INT, vehicleid);
+public OnVehicleSpawn(vehicleid) return @HOOKS_CallHook("OnVehicleSpawn", H_INT, vehicleid);
 #if defined _ALS_OnVehicleSpawn
 
 #undef OnVehicleSpawn
@@ -125,7 +126,7 @@ public OnVehicleSpawn(vehicleid) return @HOOKS_CallHook("OnVehicleSpawn" , H_INT
 #define OnVehicleSpawn @@HOnVehicleSpawn
 forward @@HOnVehicleSpawn(vehicleid);
 
-public OnVehicleDeath(vehicleid, killerid) return @HOOKS_CallHook("OnVehicleDeath" , H_INT, vehicleid, H_INT, killerid);
+public OnVehicleDeath(vehicleid, killerid) return @HOOKS_CallHook("OnVehicleDeath", H_INT, vehicleid, H_INT, killerid);
 #if defined _ALS_OnVehicleDeath
 
 #undef OnVehicleDeath
@@ -135,7 +136,7 @@ public OnVehicleDeath(vehicleid, killerid) return @HOOKS_CallHook("OnVehicleDeat
 #define OnVehicleDeath @@HOnVehicleDeath
 forward @@HOnVehicleDeath(vehicleid, killerid);
 
-public OnPlayerText(playerid, text[]) return @HOOKS_CallHook("OnPlayerText" , H_INT, playerid, H_STRING, text);
+public OnPlayerText(playerid, text[]) return @HOOKS_CallHook("OnPlayerText", H_INT, playerid, H_STRING, text);
 #if defined _ALS_OnPlayerText
 
 #undef OnPlayerText
@@ -145,7 +146,7 @@ public OnPlayerText(playerid, text[]) return @HOOKS_CallHook("OnPlayerText" , H_
 #define OnPlayerText @@HOnPlayerText
 forward @@HOnPlayerText(playerid, text[]);
 
-public OnPlayerCommandText(playerid, cmdtext[]) return @HOOKS_CallHook("OnPlayerCommandText" , H_INT, playerid, H_STRING, cmdtext);
+public OnPlayerCommandText(playerid, cmdtext[]) return @HOOKS_CallHook("OnPlayerCommandText", H_INT, playerid, H_STRING, cmdtext);
 #if defined _ALS_OnPlayerCommandText
 
 #undef OnPlayerCommandText
@@ -155,7 +156,7 @@ public OnPlayerCommandText(playerid, cmdtext[]) return @HOOKS_CallHook("OnPlayer
 #define OnPlayerCommandText @@HOnPlayerCommandText
 forward @@HOnPlayerCommandText(playerid, cmdtext[]);
 
-public OnPlayerRequestClass(playerid, classid) return @HOOKS_CallHook("OnPlayerRequestClass" , H_INT, playerid, H_INT, classid);
+public OnPlayerRequestClass(playerid, classid) return @HOOKS_CallHook("OnPlayerRequestClass", H_INT, playerid, H_INT, classid);
 #if defined _ALS_OnPlayerRequestClass
 
 #undef OnPlayerRequestClass
@@ -165,7 +166,7 @@ public OnPlayerRequestClass(playerid, classid) return @HOOKS_CallHook("OnPlayerR
 #define OnPlayerRequestClass @@HOnPlayerRequestClass
 forward @@HOnPlayerRequestClass(playerid, classid);
 
-public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) return @HOOKS_CallHook("OnPlayerEnterVehicle" , H_INT, playerid, H_INT, vehicleid, H_INT, ispassenger);
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) return @HOOKS_CallHook("OnPlayerEnterVehicle", H_INT, playerid, H_INT, vehicleid, H_INT, ispassenger);
 #if defined _ALS_OnPlayerEnterVehicle
 
 #undef OnPlayerEnterVehicle
@@ -175,7 +176,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) return @HOOKS_Call
 #define OnPlayerEnterVehicle @@HOnPlayerEnterVehicle
 forward @@HOnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 
-public OnPlayerExitVehicle(playerid, vehicleid) return @HOOKS_CallHook("OnPlayerExitVehicle" , H_INT, playerid, H_INT, vehicleid);
+public OnPlayerExitVehicle(playerid, vehicleid) return @HOOKS_CallHook("OnPlayerExitVehicle", H_INT, playerid, H_INT, vehicleid);
 #if defined _ALS_OnPlayerExitVehicle
 
 #undef OnPlayerExitVehicle
@@ -185,7 +186,7 @@ public OnPlayerExitVehicle(playerid, vehicleid) return @HOOKS_CallHook("OnPlayer
 #define OnPlayerExitVehicle @@HOnPlayerExitVehicle
 forward @@HOnPlayerExitVehicle(playerid, vehicleid);
 
-public OnPlayerStateChange(playerid, newstate, oldstate) return @HOOKS_CallHook("OnPlayerStateChange" , H_INT, playerid, H_INT, newstate, H_INT, oldstate);
+public OnPlayerStateChange(playerid, newstate, oldstate) return @HOOKS_CallHook("OnPlayerStateChange", H_INT, playerid, H_INT, newstate, H_INT, oldstate);
 #if defined _ALS_OnPlayerStateChange
 
 #undef OnPlayerStateChange
@@ -195,7 +196,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate) return @HOOKS_CallHook(
 #define OnPlayerStateChange @@HOnPlayerStateChange
 forward @@HOnPlayerStateChange(playerid, newstate, oldstate);
 
-public OnPlayerEnterCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnterCheckpoint" , H_INT, playerid);
+public OnPlayerEnterCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnterCheckpoint", H_INT, playerid);
 #if defined _ALS_OnPlayerEnterCheckpoint
 
 #undef OnPlayerEnterCheckpoint
@@ -205,7 +206,7 @@ public OnPlayerEnterCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnterCh
 #define OnPlayerEnterCheckpoint @@HOnPlayerEnterCheckpoint
 forward @@HOnPlayerEnterCheckpoint(playerid);
 
-public OnPlayerLeaveCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLeaveCheckpoint" , H_INT, playerid);
+public OnPlayerLeaveCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLeaveCheckpoint", H_INT, playerid);
 #if defined _ALS_OnPlayerLeaveCheckpoint
 
 #undef OnPlayerLeaveCheckpoint
@@ -216,7 +217,7 @@ public OnPlayerLeaveCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLeaveCh
 forward @@HOnPlayerLeaveCheckpoint(playerid);
 
 /*
-public OnPlayerEnterRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnterRaceCheckpoint" , H_INT, playerid);
+public OnPlayerEnterRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnterRaceCheckpoint", H_INT, playerid);
 #if defined _ALS_OnPlayerEnterRaceCheckpoint
 
 #undef OnPlayerEnterRaceCheckpoint
@@ -227,7 +228,7 @@ public OnPlayerEnterRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerEnt
 forward @@HOnPlayerEnterRaceCheckpoint(playerid);
 
 
-public OnPlayerLeaveRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLeaveRaceCheckpoint" , H_INT, playerid);
+public OnPlayerLeaveRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLeaveRaceCheckpoint", H_INT, playerid);
 #if defined _ALS_OnPlayerLeaveRaceCheckpoint
 
 #undef OnPlayerLeaveRaceCheckpoint
@@ -238,7 +239,7 @@ public OnPlayerLeaveRaceCheckpoint(playerid) return @HOOKS_CallHook("OnPlayerLea
 forward @@HOnPlayerLeaveRaceCheckpoint(playerid);
 */
 
-public OnRconCommand(cmd[]) return @HOOKS_CallHook("OnRconCommand" , H_STRING, cmd);
+public OnRconCommand(cmd[]) return @HOOKS_CallHook("OnRconCommand", H_STRING, cmd);
 #if defined _ALS_OnRconCommand
 
 #undef OnRconCommand
@@ -248,7 +249,7 @@ public OnRconCommand(cmd[]) return @HOOKS_CallHook("OnRconCommand" , H_STRING, c
 #define OnRconCommand @@HOnRconCommand
 forward @@HOnRconCommand(cmd[]);
 
-public OnPlayerRequestSpawn(playerid) return @HOOKS_CallHook("OnPlayerRequestSpawn" , H_INT, playerid);
+public OnPlayerRequestSpawn(playerid) return @HOOKS_CallHook("OnPlayerRequestSpawn", H_INT, playerid);
 #if defined _ALS_OnPlayerRequestSpawn
 
 #undef OnPlayerRequestSpawn
@@ -258,7 +259,7 @@ public OnPlayerRequestSpawn(playerid) return @HOOKS_CallHook("OnPlayerRequestSpa
 #define OnPlayerRequestSpawn @@HOnPlayerRequestSpawn
 forward @@HOnPlayerRequestSpawn(playerid);
 
-public OnObjectMoved(objectid) return @HOOKS_CallHook("OnObjectMoved" , H_INT, objectid);
+public OnObjectMoved(objectid) return @HOOKS_CallHook("OnObjectMoved", H_INT, objectid);
 #if defined _ALS_OnObjectMoved
 
 #undef OnObjectMoved
@@ -268,7 +269,7 @@ public OnObjectMoved(objectid) return @HOOKS_CallHook("OnObjectMoved" , H_INT, o
 #define OnObjectMoved @@HOnObjectMoved
 forward @@HOnObjectMoved(objectid);
 
-public OnPlayerObjectMoved(playerid, objectid) return @HOOKS_CallHook("OnPlayerObjectMoved" , H_INT, playerid, H_INT, objectid);
+public OnPlayerObjectMoved(playerid, objectid) return @HOOKS_CallHook("OnPlayerObjectMoved", H_INT, playerid, H_INT, objectid);
 #if defined _ALS_OnPlayerObjectMoved
 
 #undef OnPlayerObjectMoved
@@ -278,7 +279,7 @@ public OnPlayerObjectMoved(playerid, objectid) return @HOOKS_CallHook("OnPlayerO
 #define OnPlayerObjectMoved @@HOnPlayerObjectMoved
 forward @@HOnPlayerObjectMoved(playerid, objectid);
 
-public OnPlayerPickUpPickup(playerid, pickupid) return @HOOKS_CallHook("OnPlayerPickUpPickup" , H_INT, playerid, H_INT, pickupid);
+public OnPlayerPickUpPickup(playerid, pickupid) return @HOOKS_CallHook("OnPlayerPickUpPickup", H_INT, playerid, H_INT, pickupid);
 #if defined _ALS_OnPlayerPickUpPickup
 
 #undef OnPlayerPickUpPickup
@@ -288,7 +289,7 @@ public OnPlayerPickUpPickup(playerid, pickupid) return @HOOKS_CallHook("OnPlayer
 #define OnPlayerPickUpPickup @@HOnPlayerPickUpPickup
 forward @@HOnPlayerPickUpPickup(playerid, pickupid);
 
-public OnVehicleMod(playerid, vehicleid, componentid) return @HOOKS_CallHook("OnVehicleMod" , H_INT, playerid, H_INT, vehicleid, H_INT, componentid);
+public OnVehicleMod(playerid, vehicleid, componentid) return @HOOKS_CallHook("OnVehicleMod", H_INT, playerid, H_INT, vehicleid, H_INT, componentid);
 #if defined _ALS_OnVehicleMod
 
 #undef OnVehicleMod
@@ -298,7 +299,7 @@ public OnVehicleMod(playerid, vehicleid, componentid) return @HOOKS_CallHook("On
 #define OnVehicleMod @@HOnVehicleMod
 forward @@HOnVehicleMod(playerid, vehicleid, componentid);
 
-public OnEnterExitModShop(playerid, enterexit, interiorid) return @HOOKS_CallHook("OnEnterExitModShop" , H_INT, playerid, H_INT, enterexit, H_INT, interiorid);
+public OnEnterExitModShop(playerid, enterexit, interiorid) return @HOOKS_CallHook("OnEnterExitModShop", H_INT, playerid, H_INT, enterexit, H_INT, interiorid);
 #if defined _ALS_OnEnterExitModShop
 
 #undef OnEnterExitModShop
@@ -308,7 +309,7 @@ public OnEnterExitModShop(playerid, enterexit, interiorid) return @HOOKS_CallHoo
 #define OnEnterExitModShop @@HOnEnterExitModShop
 forward @@HOnEnterExitModShop(playerid, enterexit, interiorid);
 
-public OnVehiclePaintjob(playerid, vehicleid, paintjobid) return @HOOKS_CallHook("OnVehiclePaintjob" , H_INT, playerid, H_INT, vehicleid, H_INT, paintjobid);
+public OnVehiclePaintjob(playerid, vehicleid, paintjobid) return @HOOKS_CallHook("OnVehiclePaintjob", H_INT, playerid, H_INT, vehicleid, H_INT, paintjobid);
 #if defined _ALS_OnVehiclePaintjob
 
 #undef OnVehiclePaintjob
@@ -318,7 +319,7 @@ public OnVehiclePaintjob(playerid, vehicleid, paintjobid) return @HOOKS_CallHook
 #define OnVehiclePaintjob @@HOnVehiclePaintjob
 forward @@HOnVehiclePaintjob(playerid, vehicleid, paintjobid);
 
-public OnVehicleRespray(playerid, vehicleid, color1, color2) return @HOOKS_CallHook("OnVehicleRespray" , H_INT, playerid, H_INT, vehicleid, H_INT, color1, H_INT, color2);
+public OnVehicleRespray(playerid, vehicleid, color1, color2) return @HOOKS_CallHook("OnVehicleRespray", H_INT, playerid, H_INT, vehicleid, H_INT, color1, H_INT, color2);
 #if defined _ALS_OnVehicleRespray
 
 #undef OnVehicleRespray
@@ -329,7 +330,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2) return @HOOKS_CallH
 forward @@HOnVehicleRespray(playerid, vehicleid, color1, color2);
 
 /*
-public OnVehicleDamageStatusUpdate(vehicleid, playerid) return @HOOKS_CallHook("OnVehicleDamageStatusUpdate" , H_INT, vehicleid, H_INT, playerid);
+public OnVehicleDamageStatusUpdate(vehicleid, playerid) return @HOOKS_CallHook("OnVehicleDamageStatusUpdate", H_INT, vehicleid, H_INT, playerid);
 #if defined _ALS_OnVehicleDamageStatusUpdate
 
 #undef OnVehicleDamageStatusUpdate
@@ -338,9 +339,9 @@ public OnVehicleDamageStatusUpdate(vehicleid, playerid) return @HOOKS_CallHook("
 #endif
 #define OnVehicleDamageStatusUpdate @@HOnVehicleDamageStatusUpdate
 forward @@HOnVehicleDamageStatusUpdate(vehicleid, playerid);
-*/
 
-public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z) return @HOOKS_CallHook("OnUnoccupiedVehicleUpdate" , H_INT, vehicleid, H_INT, playerid, H_INT, passenger_seat, H_FLOAT, new_x, H_FLOAT, new_y, H_FLOAT, new_z, H_FLOAT, vel_x, H_FLOAT, vel_y, H_FLOAT, vel_z);
+
+public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z) return @HOOKS_CallHook("OnUnoccupiedVehicleUpdate", H_INT, vehicleid, H_INT, playerid, H_INT, passenger_seat, H_FLOAT, new_x, H_FLOAT, new_y, H_FLOAT, new_z, H_FLOAT, vel_x, H_FLOAT, vel_y, H_FLOAT, vel_z);
 #if defined _ALS_OnUnoccupiedVehicleUpdate
 
 #undef OnUnoccupiedVehicleUpdate
@@ -349,8 +350,9 @@ public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_
 #endif
 #define OnUnoccupiedVehicleUpdate @@HOnUnoccupiedVehicleUpdate
 forward @@HOnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z);
+*/
 
-public OnPlayerSelectedMenuRow(playerid, row) return @HOOKS_CallHook("OnPlayerSelectedMenuRow" , H_INT, playerid, H_INT, row);
+public OnPlayerSelectedMenuRow(playerid, row) return @HOOKS_CallHook("OnPlayerSelectedMenuRow", H_INT, playerid, H_INT, row);
 #if defined _ALS_OnPlayerSelectedMenuRow
 
 #undef OnPlayerSelectedMenuRow
@@ -360,7 +362,7 @@ public OnPlayerSelectedMenuRow(playerid, row) return @HOOKS_CallHook("OnPlayerSe
 #define OnPlayerSelectedMenuRow @@HOnPlayerSelectedMenuRow
 forward @@HOnPlayerSelectedMenuRow(playerid, row);
 
-public OnPlayerExitedMenu(playerid) return @HOOKS_CallHook("OnPlayerExitedMenu" , H_INT, playerid);
+public OnPlayerExitedMenu(playerid) return @HOOKS_CallHook("OnPlayerExitedMenu", H_INT, playerid);
 #if defined _ALS_OnPlayerExitedMenu
 
 #undef OnPlayerExitedMenu
@@ -370,7 +372,7 @@ public OnPlayerExitedMenu(playerid) return @HOOKS_CallHook("OnPlayerExitedMenu" 
 #define OnPlayerExitedMenu @@HOnPlayerExitedMenu
 forward @@HOnPlayerExitedMenu(playerid);
 
-public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) return @HOOKS_CallHook("OnPlayerInteriorChange" , H_INT, playerid, H_INT, newinteriorid, H_INT, oldinteriorid);
+public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) return @HOOKS_CallHook("OnPlayerInteriorChange", H_INT, playerid, H_INT, newinteriorid, H_INT, oldinteriorid);
 #if defined _ALS_OnPlayerInteriorChange
 
 #undef OnPlayerInteriorChange
@@ -380,7 +382,7 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) return @HO
 #define OnPlayerInteriorChange @@HOnPlayerInteriorChange
 forward @@HOnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) return @HOOKS_CallHook("OnPlayerKeyStateChange" , H_INT, playerid, H_INT, newkeys, H_INT, oldkeys);
+public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) return @HOOKS_CallHook("OnPlayerKeyStateChange", H_INT, playerid, H_INT, newkeys, H_INT, oldkeys);
 #if defined _ALS_OnPlayerKeyStateChange
 
 #undef OnPlayerKeyStateChange
@@ -390,7 +392,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) return @HOOKS_CallHook
 #define OnPlayerKeyStateChange @@HOnPlayerKeyStateChange
 forward @@HOnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 
-public OnRconLoginAttempt( ip[], password[], success) return @HOOKS_CallHook("OnRconLoginAttempt" , H_STRING, ip, H_STRING, password, H_INT, success);
+public OnRconLoginAttempt( ip[], password[], success) return @HOOKS_CallHook("OnRconLoginAttempt", H_STRING, ip, H_STRING, password, H_INT, success);
 #if defined _ALS_OnRconLoginAttempt
 
 #undef OnRconLoginAttempt
@@ -401,7 +403,7 @@ public OnRconLoginAttempt( ip[], password[], success) return @HOOKS_CallHook("On
 forward @@HOnRconLoginAttempt( ip[], password[], success);
 
 /*
-public OnPlayerUpdate(playerid) return @HOOKS_CallHook("OnPlayerUpdate" , H_INT, playerid);
+public OnPlayerUpdate(playerid) return @HOOKS_CallHook("OnPlayerUpdate", H_INT, playerid);
 #if defined _ALS_OnPlayerUpdate
 
 #undef OnPlayerUpdate
@@ -412,7 +414,7 @@ public OnPlayerUpdate(playerid) return @HOOKS_CallHook("OnPlayerUpdate" , H_INT,
 forward @@HOnPlayerUpdate(playerid);
 */
 
-public OnPlayerStreamIn(playerid, forplayerid) return @HOOKS_CallHook("OnPlayerStreamIn" , H_INT, playerid, H_INT, forplayerid);
+public OnPlayerStreamIn(playerid, forplayerid) return @HOOKS_CallHook("OnPlayerStreamIn", H_INT, playerid, H_INT, forplayerid);
 #if defined _ALS_OnPlayerStreamIn
 
 #undef OnPlayerStreamIn
@@ -422,7 +424,7 @@ public OnPlayerStreamIn(playerid, forplayerid) return @HOOKS_CallHook("OnPlayerS
 #define OnPlayerStreamIn @@HOnPlayerStreamIn
 forward @@HOnPlayerStreamIn(playerid, forplayerid);
 
-public OnPlayerStreamOut(playerid, forplayerid) return @HOOKS_CallHook("OnPlayerStreamOut" , H_INT, playerid, H_INT, forplayerid);
+public OnPlayerStreamOut(playerid, forplayerid) return @HOOKS_CallHook("OnPlayerStreamOut", H_INT, playerid, H_INT, forplayerid);
 #if defined _ALS_OnPlayerStreamOut
 
 #undef OnPlayerStreamOut
@@ -432,7 +434,7 @@ public OnPlayerStreamOut(playerid, forplayerid) return @HOOKS_CallHook("OnPlayer
 #define OnPlayerStreamOut @@HOnPlayerStreamOut
 forward @@HOnPlayerStreamOut(playerid, forplayerid);
 
-public OnVehicleStreamIn(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehicleStreamIn" , H_INT, vehicleid, H_INT, forplayerid);
+public OnVehicleStreamIn(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehicleStreamIn", H_INT, vehicleid, H_INT, forplayerid);
 #if defined _ALS_OnVehicleStreamIn
 
 #undef OnVehicleStreamIn
@@ -442,7 +444,7 @@ public OnVehicleStreamIn(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehic
 #define OnVehicleStreamIn @@HOnVehicleStreamIn
 forward @@HOnVehicleStreamIn(vehicleid, forplayerid);
 
-public OnVehicleStreamOut(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehicleStreamOut" , H_INT, vehicleid, H_INT, forplayerid);
+public OnVehicleStreamOut(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehicleStreamOut", H_INT, vehicleid, H_INT, forplayerid);
 #if defined _ALS_OnVehicleStreamOut
 
 #undef OnVehicleStreamOut
@@ -452,7 +454,8 @@ public OnVehicleStreamOut(vehicleid, forplayerid) return @HOOKS_CallHook("OnVehi
 #define OnVehicleStreamOut @@HOnVehicleStreamOut
 forward @@HOnVehicleStreamOut(vehicleid, forplayerid);
 
-public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) return @HOOKS_CallHook("OnDialogResponse" , H_INT, playerid, H_INT, dialogid, H_INT, response, H_INT, listitem, H_STRING, inputtext);
+public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) 
+	return @HOOKS_CallHook("OnDialogResponse", H_INT, playerid, H_INT, dialogid, H_INT, response, H_INT, listitem, H_STRING, inputtext);
 #if defined _ALS_OnDialogResponse
 
 #undef OnDialogResponse
@@ -462,7 +465,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) ret
 #define OnDialogResponse @@HOnDialogResponse
 forward @@HOnDialogResponse(playerid, dialogid, response, listitem, inputtext[]);
 
-public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) return @HOOKS_CallHook("OnPlayerTakeDamage" , H_INT, playerid, H_INT, issuerid, H_FLOAT, amount, H_INT, weaponid, H_INT, bodypart);
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) return @HOOKS_CallHook("OnPlayerTakeDamage", H_INT, playerid, H_INT, issuerid, H_FLOAT, amount, H_INT, weaponid, H_INT, bodypart);
 #if defined _ALS_OnPlayerTakeDamage
 
 #undef OnPlayerTakeDamage
@@ -472,7 +475,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart) 
 #define OnPlayerTakeDamage @@HOnPlayerTakeDamage
 forward @@HOnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart);
 
-public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart) return @HOOKS_CallHook("OnPlayerGiveDamage" , H_INT, playerid, H_INT, damagedid, H_FLOAT, amount, H_INT, weaponid, H_INT, bodypart);
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart) return @HOOKS_CallHook("OnPlayerGiveDamage", H_INT, playerid, H_INT, damagedid, H_FLOAT, amount, H_INT, weaponid, H_INT, bodypart);
 #if defined _ALS_OnPlayerGiveDamage
 
 #undef OnPlayerGiveDamage
@@ -482,7 +485,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 #define OnPlayerGiveDamage @@HOnPlayerGiveDamage
 forward @@HOnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart);
 
-public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerClickMap" , H_INT, playerid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
+public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerClickMap", H_INT, playerid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
 #if defined _ALS_OnPlayerClickMap
 
 #undef OnPlayerClickMap
@@ -492,7 +495,7 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ) return @HOOKS_Ca
 #define OnPlayerClickMap @@HOnPlayerClickMap
 forward @@HOnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ);
 
-public OnPlayerClickTextDraw(playerid, Text:clickedid) return @HOOKS_CallHook("OnPlayerClickTextDraw" , H_INT, playerid, H_INT, _:clickedid);
+public OnPlayerClickTextDraw(playerid, Text:clickedid) return @HOOKS_CallHook("OnPlayerClickTextDraw", H_INT, playerid, H_INT, _:clickedid);
 #if defined _ALS_OnPlayerClickTextDraw
 
 #undef OnPlayerClickTextDraw
@@ -502,7 +505,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) return @HOOKS_CallHook("O
 #define OnPlayerClickTextDraw @@HOnPlayerClickTextDraw
 forward @@HOnPlayerClickTextDraw(playerid, Text:clickedid);
 /*
-public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) return @HOOKS_CallHook("OnPlayerClickPlayerTextDraw" , H_INT, playerid, H_INT, playertextid);
+public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) return @HOOKS_CallHook("OnPlayerClickPlayerTextDraw", H_INT, playerid, H_INT, playertextid);
 #if defined _ALS_OnPlayerClickPlayerTextDraw
 
 #undef OnPlayerClickPlayerTextDraw
@@ -513,7 +516,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) return @HO
 forward @@HOnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid);
 */
 
-public OnIncomingConnection(playerid, ip_address[], port) return @HOOKS_CallHook("OnIncomingConnection" , H_INT, playerid, H_STRING, ip_address, H_INT, port);
+public OnIncomingConnection(playerid, ip_address[], port) return @HOOKS_CallHook("OnIncomingConnection", H_INT, playerid, H_STRING, ip_address, H_INT, port);
 #if defined _ALS_OnIncomingConnection
 
 #undef OnIncomingConnection
@@ -523,7 +526,7 @@ public OnIncomingConnection(playerid, ip_address[], port) return @HOOKS_CallHook
 #define OnIncomingConnection @@HOnIncomingConnection
 forward @@HOnIncomingConnection(playerid, ip_address[], port);
 /*
-public OnTrailerUpdate(playerid, vehicleid) return @HOOKS_CallHook("OnTrailerUpdate" , H_INT, playerid, H_INT, vehicleid);
+public OnTrailerUpdate(playerid, vehicleid) return @HOOKS_CallHook("OnTrailerUpdate", H_INT, playerid, H_INT, vehicleid);
 #if defined _ALS_OnTrailerUpdate
 
 #undef OnTrailerUpdate
@@ -533,7 +536,7 @@ public OnTrailerUpdate(playerid, vehicleid) return @HOOKS_CallHook("OnTrailerUpd
 #define OnTrailerUpdate @@HOnTrailerUpdate
 forward @@HOnTrailerUpdate(playerid, vehicleid);
 */
-public OnPlayerClickPlayer(playerid, clickedplayerid, source) return @HOOKS_CallHook("OnPlayerClickPlayer" , H_INT, playerid, H_INT, clickedplayerid, H_INT, source);
+public OnPlayerClickPlayer(playerid, clickedplayerid, source) return @HOOKS_CallHook("OnPlayerClickPlayer", H_INT, playerid, H_INT, clickedplayerid, H_INT, source);
 #if defined _ALS_OnPlayerClickPlayer
 
 #undef OnPlayerClickPlayer
@@ -543,7 +546,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source) return @HOOKS_Call
 #define OnPlayerClickPlayer @@HOnPlayerClickPlayer
 forward @@HOnPlayerClickPlayer(playerid, clickedplayerid, source);
 
-public OnPlayerSelectObject(playerid, type, objectid, modelid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerSelectObject" , H_INT, playerid, H_INT, type, H_INT, objectid, H_INT, modelid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
+public OnPlayerSelectObject(playerid, type, objectid, modelid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerSelectObject", H_INT, playerid, H_INT, type, H_INT, objectid, H_INT, modelid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
 #if defined _ALS_OnPlayerSelectObject
 
 #undef OnPlayerSelectObject
@@ -553,7 +556,7 @@ public OnPlayerSelectObject(playerid, type, objectid, modelid, Float:fX, Float:f
 #define OnPlayerSelectObject @@HOnPlayerSelectObject
 forward @@HOnPlayerSelectObject(playerid, type, objectid, modelid, Float:fX, Float:fY, Float:fZ);
 
-public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerWeaponShot" , H_INT, playerid, H_INT, weaponid, H_INT, hittype, H_INT, hitid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
+public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ) return @HOOKS_CallHook("OnPlayerWeaponShot", H_INT, playerid, H_INT, weaponid, H_INT, hittype, H_INT, hitid, H_FLOAT, fX, H_FLOAT, fY, H_FLOAT, fZ);
 #if defined _ALS_OnPlayerWeaponShot
 
 #undef OnPlayerWeaponShot
@@ -563,7 +566,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 #define OnPlayerWeaponShot @@HOnPlayerWeaponShot
 forward @@HOnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
 
-public @receivestring(const message[], const source[]) return @HOOKS_CallHook("@receivestring" , H_STRING, message, H_STRING, source);
+public @receivestring(const message[], const source[]) return @HOOKS_CallHook("@receivestring", H_STRING, message, H_STRING, source);
 #if defined _ALS_@receivestring
 
 #undef @receivestring
@@ -573,7 +576,7 @@ public @receivestring(const message[], const source[]) return @HOOKS_CallHook("@
 #define @receivestring @@H@receivestring
 forward @@H@receivestring(const message[], const source[]);
 
-public @receivepacket(const packet[], size, const source[]) return @HOOKS_CallHook("@receivepacket" , H_STRING, packet, H_INT, size, H_STRING, source);
+public @receivepacket(const packet[], size, const source[]) return @HOOKS_CallHook("@receivepacket", H_STRING, packet, H_INT, size, H_STRING, source);
 #if defined _ALS_@receivepacket
 
 #undef @receivepacket

@@ -55,4 +55,8 @@ enum hooks_data
 	H_BOOL,
 	H_STRING
 };
+
+#define VERSION "1.2.3"
+#define _VERSION 0x010203
+
 #endif
