@@ -2,7 +2,7 @@ GPP = g++
 GCC = gcc 
 CMDS_OUTFILE = "./build/samp-hooks.so"
 
-COMPILE_FLAGS = -m32 -fPIC -c -lrt -w -DLINUX -O3 -D_GNU_SOURCE -fpermissive  -I ../ -I ../amx  -D PROJECT_NAME=\"samp-hooks\"
+COMPILE_FLAGS = -m32 -fPIC -c -lrt -w -DLINUX -O3 -D_GNU_SOURCE -fpermissive  -I ./ -I ./amx  -D PROJECT_NAME=\"samp-hooks\"
 
 samp-hooks = -D samp-hooks $(COMPILE_FLAGS)
 
